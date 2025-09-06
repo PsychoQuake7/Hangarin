@@ -6,7 +6,7 @@ class SubTaskInline(admin.TabularInline):
     extra = 1
     fields = ("title", "status")
     show_change_link = True
-
+    
 class NoteInline(admin.StackedInline):
     model = Note
     extra = 1
@@ -27,7 +27,7 @@ class SubTaskAdmin(admin.ModelAdmin):
     search_fields = ("title",)
     
     def parent_task_name(self, obj):
-        return obj.task.title
+        return obj.parent_task.title  
     parent_task_name.short_description = "Parent Task"
 
 @admin.register(Category)
