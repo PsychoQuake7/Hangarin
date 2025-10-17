@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{% block title %}Hangarin{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no" />
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900">
+    <link rel="stylesheet" href="{% static 'css/ready.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- ========== HEADER ========== -->
+        <div class="main-header">
+            <div class="logo-header">
+                <a href="{% url 'dashboard' %}" class="logo fw-bold">Hangarin</a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+            </div>
+
+            <!-- ===== Top Navbar ===== -->
+            <nav class="navbar navbar-header navbar-expand-lg">
+                <div class="container-fluid">
+                    <form class="navbar-left navbar-form nav-search mr-md-3">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search..." class="form-control">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="la la-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                <i class="la la-bell"></i>
+                                <span class="notification">2</span>
+                            </a>
+                            <ul class="dropdown-menu notif-box">
+                                <li>
+                                    <div class="dropdown-title">You have 2 notifications</div>
+                                </li>
+                                <li><a class="see-all" href="#">See all <i class="la la-angle-right"></i></a></li>
+                            </ul>
+                        </li>
+
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle profile-pic" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{% static 'img/profile.jpg' %}" width="36" class="img-circle">
+                                <span>{{ request.user.username }}</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <div class="user-box p-3 border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{% static 'img/profile.jpg' %}" alt="user" class="rounded-circle mr-2"
+                                            width="45">
+                                        <div>
+                                            <h6 class="mb-0">{{ request.user.username }}</h6>
+                                            <small class="text-muted">{{ request.user.email }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="#"><i class="la la-user me-2"></i> Profile</a>
+                                <a class="dropdown-item" href="#"><i class="la la-cog me-2"></i> Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <form method="POST" action="{% url 'account_logout' %}" class="m-0 p-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger w-100 text-left">
+                                        <i class="la la-power-off me-2"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- ========== SIDEBAR ========== -->
+        <div class="sidebar">
+            <div class="scrollbar-inner sidebar-wrapper">
+                <div class="user">
+                    <div class="photo">
+                        <img src="{% static 'img/profile.jpg' %}">
+                    </div>
+                    <div class="info">
+                        <span>{{ request.user.username|default:"Guest" }}</span>
+                        <span class="user-level">{% if request.user.is_authenticated %}User{% else %}Visitor{% endif %}</span>
+                    </div>
+                </div>
+
+                <ul class="nav">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="la la-home"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'task-list' %}active{% endif %}">
+                        <a href="{% url 'task-list' %}">
+                            <i class="la la-list"></i>
+                            <p>Tasks</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'note-list' %}active{% endif %}">
+                        <a href="{% url 'note-list' %}">
+                            <i class="la la-copy"></i>
+                            <p>Notes</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'category-list' %}active{% endif %}">
+                        <a href="{% url 'category-list' %}">
+                            <i class="la la-tags"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'priority-list' %}active{% endif %}">
+                        <a href="{% url 'priority-list' %}">
+                            <i class="la la-flag"></i>
+                            <p>Priorities</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'subtask-list' %}active{% endif %}">
+                        <a href="{% url 'subtask-list' %}">
+                            <i class="la la-tasks"></i>
+                            <p>Subtasks</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========== MAIN PANEL ========== -->
+        <div class="main-panel">
+            <div class="content">
+                <div class="container-fluid">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JS Files ===== -->
+    <script src="{% static 'js/task/jquery.3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/task/popper.min.js' %}"></script>
+    <script src="{% static 'js/task/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/plugin/chartist/chartist.min.js' %}"></script>
+    <script src="{% static 'js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js' %}"></script>
+    <script src="{% static 'js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'js/plugin/bootstrap-toggle/bootstrap-toggle.min.js' %}"></script>
+    <script src="{% static 'js/plugin/jquery-mapael/jquery.mapael.min.js' %}"></script>
+    <script src="{% static 'js/plugin/jquery-mapael/maps/world_countries.min.js' %}"></script>
+    <script src="{% static 'js/plugin/chart-circle/circles.min.js' %}"></script>
+    <script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/ready.min.js' %}"></script>
+</body>
+
+</html>

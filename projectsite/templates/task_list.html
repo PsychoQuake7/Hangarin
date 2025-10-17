@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Tasks</h2>
+    <a href="{% url 'task-add' %}" class="btn btn-primary"><i class="la la-plus"></i> Add Task</a>
+</div>
+
+<!-- Search + Sort Controls -->
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search tasks...">
+    </div>
+    <div class="col-md-3">
+        <select name="sort" class="form-select">
+            <option value="">-- Sort by --</option>
+            <option value="title_asc" {% if request.GET.sort == 'title_asc' %}selected{% endif %}>Title (A–Z)</option>
+            <option value="title_desc" {% if request.GET.sort == 'title_desc' %}selected{% endif %}>Title (Z–A)</option>
+            <option value="priority_asc" {% if request.GET.sort == 'priority_asc' %}selected{% endif %}>Priority (High - Low)</option>
+            <option value="priority_desc" {% if request.GET.sort == 'priority_desc' %}selected{% endif %}>Priority (Low - High)
+            </option>
+            <option value="created_desc" {% if request.GET.sort == 'created_desc' %}selected{% endif %}>Newest First</option>
+            <option value="created_asc" {% if request.GET.sort == 'created_asc' %}selected{% endif %}>Oldest First</option>
+
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-secondary w-100"><i class="la la-search"></i> Apply</button>
+    </div>
+</form>
+
+<div class="card">
+    <div class="card-body table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Deadline</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td><span class="badge bg-info text-dark">{{ task.status }}</span></td>
+                    <td>{{ task.deadline|date:"M d, Y H:i" }}</td>
+                    <td>{{ task.category }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>
+                        <a href="{% url 'task-update' task.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'task-delete' task.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No tasks yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}
