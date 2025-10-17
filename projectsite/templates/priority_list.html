@@ -1,52 +1,161 @@
 {% extends 'base.html' %}
 {% block title %}Priorities{% endblock %}
 {% block content %}
+
+<style>
+    /* Lilac + Indigo Aesthetic */
+    body {
+        background-color: #f7f3fa;
+    }
+
+    h2 {
+        color: #4b0082; /* Deep Indigo */
+    }
+
+    .btn-primary {
+        background-color: #b57edc; /* Lilac */
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #9b59b6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: #6c63ff; /* Soft Indigo */
+        border: none;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5848d1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(88, 72, 209, 0.3);
+    }
+
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(176, 140, 255, 0.2);
+        background: white;
+        transition: 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 6px 25px rgba(155, 89, 182, 0.25);
+    }
+
+    .form-control,
+    .form-select {
+        border: 1px solid #d6b8f5;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #b57edc;
+        box-shadow: 0 0 0 0.2rem rgba(181, 126, 220, 0.25);
+    }
+
+    .table thead {
+        background-color: #ede3fa;
+        color: #4b0082;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f2ebff;
+    }
+
+    .btn-warning {
+        background-color: #f5c542;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #f1b600;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    .pagination .page-link {
+        color: #4b0082;
+        border-radius: 50%;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #b57edc;
+        border-color: #b57edc;
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Priorities</h2>
-    <a href="{% url 'priority-add' %}" class="btn btn-primary"><i class="la la-plus"></i> Add Priority</a>
+    <h2 class="fw-bold"><i class="la la-star"></i> Priorities</h2>
+    <a href="{% url 'priority-add' %}" class="btn btn-primary shadow-sm">
+        <i class="la la-plus"></i> Add Priority
+    </a>
 </div>
 
-<form method="get" class="row g-2 mb-3">
+<form method="get" class="row g-2 mb-4">
     <div class="col-md-5">
-        <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search priorities...">
+        <input type="text" name="q" value="{{ request.GET.q }}" class="form-control"
+            placeholder="🔍 Search priorities...">
     </div>
     <div class="col-md-3">
         <select name="sort" class="form-select">
             <option value="">-- Sort by --</option>
             <option value="name_asc" {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Name (A–Z)</option>
             <option value="name_desc" {% if request.GET.sort == 'name_desc' %}selected{% endif %}>Name (Z–A)</option>
-            <option value="created_desc" {% if request.GET.sort == 'created_desc' %}selected{% endif %}>Newest First
-            </option>
-            <option value="created_asc" {% if request.GET.sort == 'created_asc' %}selected{% endif %}>Oldest First
-            </option>
+            <option value="created_desc" {% if request.GET.sort == 'created_desc' %}selected{% endif %}>Newest First</option>
+            <option value="created_asc" {% if request.GET.sort == 'created_asc' %}selected{% endif %}>Oldest First</option>
         </select>
     </div>
     <div class="col-md-2">
-        <button type="submit" class="btn btn-secondary w-100"><i class="la la-search"></i> Apply</button>
+        <button type="submit" class="btn btn-secondary w-100">
+            <i class="la la-filter"></i> Apply
+        </button>
     </div>
 </form>
 
 <div class="card">
     <div class="card-body table-responsive">
         <table class="table table-hover align-middle">
-            <thead class="table-light">
+            <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for priority in priorities %}
                 <tr>
                     <td>{{ priority.name }}</td>
-                    <td>
-                        <a href="{% url 'priority-update' priority.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{% url 'priority-delete' priority.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    <td class="text-center">
+                        <a href="{% url 'priority-update' priority.pk %}" class="btn btn-sm btn-warning me-1">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a href="{% url 'priority-delete' priority.pk %}" class="btn btn-sm btn-danger">
+                            <i class="la la-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="2" class="text-center text-muted">No priorities yet.</td>
+                    <td colspan="2" class="text-center text-muted py-4">
+                        <i class="la la-inbox fs-3 d-block mb-2"></i>
+                        No priorities yet.
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

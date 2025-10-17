@@ -1,40 +1,158 @@
 {% extends 'base.html' %}
 {% block title %}Subtasks{% endblock %}
 {% block content %}
+
+<style>
+    /* 🌸 Lilac + Indigo Aesthetic Theme */
+    body {
+        background-color: #f7f3fa;
+    }
+
+    h2 {
+        color: #4b0082; /* Indigo */
+    }
+
+    .btn-primary {
+        background-color: #b57edc; /* Lilac */
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #9b59b6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: #6c63ff; /* Indigo tone */
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5848d1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(88, 72, 209, 0.3);
+    }
+
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(176, 140, 255, 0.2);
+        background: white;
+        transition: 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 6px 25px rgba(155, 89, 182, 0.25);
+    }
+
+    .form-control,
+    .form-select {
+        border: 1px solid #d6b8f5;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #b57edc;
+        box-shadow: 0 0 0 0.2rem rgba(181, 126, 220, 0.25);
+    }
+
+    .table thead {
+        background-color: #ede3fa;
+        color: #4b0082;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f3ebff;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.5em 0.75em;
+        border-radius: 8px;
+    }
+
+    .badge.bg-info {
+        background-color: #cbbcf6 !important; /* Soft lilac badge */
+        color: #4b0082 !important;
+    }
+
+    .btn-warning {
+        background-color: #f5c542;
+        border: none;
+        transition: 0.2s ease;
+    }
+
+    .btn-warning:hover {
+        background-color: #f1b600;
+        transform: translateY(-1px);
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border: none;
+        transition: 0.2s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+        transform: translateY(-1px);
+    }
+
+    .pagination .page-link {
+        color: #4b0082;
+        border-radius: 50%;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #b57edc;
+        border-color: #b57edc;
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Subtasks</h2>
-    <a href="{% url 'subtask-add' %}" class="btn btn-primary"><i class="la la-plus"></i> Add Subtask</a>
+    <h2 class="fw-bold"><i class="la la-tasks"></i> Subtasks</h2>
+    <a href="{% url 'subtask-add' %}" class="btn btn-primary shadow-sm">
+        <i class="la la-plus"></i> Add Subtask
+    </a>
 </div>
 
-<form method="get" class="row g-2 mb-3">
+<form method="get" class="row g-2 mb-4">
     <div class="col-md-5">
-        <input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search subtasks...">
+        <input type="text" name="q" value="{{ request.GET.q }}" class="form-control"
+            placeholder="🔍 Search subtasks...">
     </div>
     <div class="col-md-3">
         <select name="sort" class="form-select">
             <option value="">-- Sort by --</option>
             <option value="title_asc" {% if request.GET.sort == 'title_asc' %}selected{% endif %}>Title (A–Z)</option>
             <option value="title_desc" {% if request.GET.sort == 'title_desc' %}selected{% endif %}>Title (Z–A)</option>
-            <option value="created_desc" {% if request.GET.sort == 'created_desc' %}selected{% endif %}>Newest First
-            </option>
-            <option value="created_asc" {% if request.GET.sort == 'created_asc' %}selected{% endif %}>Oldest First
-            </option>
+            <option value="created_desc" {% if request.GET.sort == 'created_desc' %}selected{% endif %}>Newest First</option>
+            <option value="created_asc" {% if request.GET.sort == 'created_asc' %}selected{% endif %}>Oldest First</option>
         </select>
     </div>
     <div class="col-md-2">
-        <button type="submit" class="btn btn-secondary w-100"><i class="la la-search"></i> Apply</button>
+        <button type="submit" class="btn btn-secondary w-100">
+            <i class="la la-filter"></i> Apply
+        </button>
     </div>
 </form>
 
 <div class="card">
     <div class="card-body table-responsive">
         <table class="table table-hover align-middle">
-            <thead class="table-light">
+            <thead>
                 <tr>
                     <th>Title</th>
                     <th>Parent Task</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,14 +161,21 @@
                     <td>{{ subtask.title }}</td>
                     <td>{{ subtask.parent_task.title }}</td>
                     <td><span class="badge bg-info text-dark">{{ subtask.status }}</span></td>
-                    <td>
-                        <a href="{% url 'subtask-update' subtask.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{% url 'subtask-delete' subtask.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    <td class="text-center">
+                        <a href="{% url 'subtask-update' subtask.pk %}" class="btn btn-sm btn-warning me-1">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a href="{% url 'subtask-delete' subtask.pk %}" class="btn btn-sm btn-danger">
+                            <i class="la la-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center text-muted">No subtasks yet.</td>
+                    <td colspan="4" class="text-center text-muted py-4">
+                        <i class="la la-inbox fs-3 d-block mb-2"></i>
+                        No subtasks yet.
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

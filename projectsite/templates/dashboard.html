@@ -2,13 +2,86 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
+<style>
+    /* === LILAC THEME VARIABLES === */
+    :root {
+        --lilac-light: #f3e8ff;
+        --lilac: #c8a2ff;
+        --lilac-dark: #9c6bff;
+        --text-dark: #3b3b3b;
+        --text-light: #6c6c6c;
+        --white: #ffffff;
+    }
+
+    body {
+        background-color: var(--lilac-light);
+        font-family: 'Poppins', sans-serif;
+        color: var(--text-dark);
+    }
+
+    h2 {
+        color: var(--lilac-dark);
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(200, 162, 255, 0.3);
+    }
+
+    /* === CARD STYLES === */
+    .card {
+        border: none;
+        border-radius: 20px;
+        background: var(--white);
+        box-shadow: 0 6px 15px rgba(156, 107, 255, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(156, 107, 255, 0.25);
+    }
+
+    .card .icon-big {
+        font-size: 2.8rem;
+        color: var(--lilac-dark);
+        background: var(--lilac-light);
+        border-radius: 50%;
+        padding: 18px;
+        width: 70px;
+        height: 70px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-category {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 0.2rem;
+    }
+
+    .card-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--lilac-dark);
+    }
+
+    /* === GRID + SPACING === */
+    .container-fluid {
+        padding: 40px;
+    }
+
+    .row {
+        row-gap: 25px;
+    }
+</style>
+
 <div class="container-fluid">
     <h2 class="fw-bold mb-4"><i class="la la-home me-2"></i>Dashboard Overview</h2>
 
     <!-- === STAT CARDS === -->
     <div class="row">
         <div class="col-md-4 col-lg-3">
-            <div class="card card-stats card-primary">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
@@ -28,7 +101,7 @@
         </div>
 
         <div class="col-md-4 col-lg-3">
-            <div class="card card-stats card-info">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
@@ -47,9 +120,8 @@
             </div>
         </div>
 
-
-<div class="col-md-4 col-lg-3">
-            <div class="card card-stats card-success">
+        <div class="col-md-4 col-lg-3">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
@@ -69,7 +141,7 @@
         </div>
 
         <div class="col-md-4 col-lg-3">
-            <div class="card card-stats card-warning">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
@@ -89,7 +161,7 @@
         </div>
 
         <div class="col-md-4 col-lg-3">
-            <div class="card card-stats card-danger">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
@@ -108,11 +180,6 @@
             </div>
         </div>
     </div>
-                </div>
-            </div>
-    </div>
 </div>
 
 {% endblock %}
-
-
