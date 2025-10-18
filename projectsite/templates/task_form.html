@@ -22,7 +22,7 @@
         {% endif %}
 
         <form method="post" novalidate>
-            {% csrf_token %}
+            {% csrf_token %} {% include 'includes/form.html' %}
             <div class="mb-3">
                 {{ form.title.label_tag }} {{ form.title }}
             </div>
