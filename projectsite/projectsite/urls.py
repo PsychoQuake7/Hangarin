@@ -6,12 +6,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('task.urls')),
+    path('', include('task.urls')),     # Your main app
+    path('', include('pwa.urls')),      # PWA routes should be included inside urlpatterns (not outside!)
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL,
-                          document_root=settings.STATIC_ROOT)
-    
-from django.urls import path, include
-path('', include('pwa.urls')),
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
