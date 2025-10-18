@@ -166,8 +166,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # --- Progressive Web App Settings ---
-PWA_APP_NAME = 'ProjectSite'
-PWA_APP_DESCRIPTION = "A Progressive Web App version of ProjectSite"
+PWA_APP_NAME = 'Hangarin '
+PWA_APP_DESCRIPTION = "Hangarin ni Calaisha Mae S. Ducao"
 PWA_APP_THEME_COLOR = '#0A0A0A'
 PWA_APP_BACKGROUND_COLOR = '#FFFFFF'
 PWA_APP_DISPLAY = 'standalone'
