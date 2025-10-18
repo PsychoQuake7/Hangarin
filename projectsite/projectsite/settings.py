@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-3884h-q@sw)0djd0-c3_qu1qare3cma&=vtf9ijr2-!rc3cuw-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["Hesuyasu.pythonanywhere.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["PsychoQuake.pythonanywhere.com", "127.0.0.1"]
 
 
 # Application definition
