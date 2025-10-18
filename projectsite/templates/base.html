@@ -16,8 +16,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" />
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
         /* === LILAC THEME VARIABLES === */
@@ -246,13 +245,13 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{% static 'img/profile3.jpg' %}" alt="User" class="profile-pic me-2">
+                                <img src="{% static 'img/profile2.jpg' %}" alt="User" class="profile-pic me-2">
                                 <span class="fw-semibold text-dark">{{ request.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li>
                                     <div class="user-box">
-                                        <div class="u-img"><img src="{% static 'img/profile3.jpg' %}" alt="user"></div>
+                                        <div class="u-img"><img src="{% static 'img/profile2.jpg' %}" alt="user"></div>
                                         <div class="u-text">
                                             <h6>{{ request.user.username }}</h6>
                                             <p class="text-muted">{{ request.user.email }}</p>
